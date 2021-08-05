@@ -1,0 +1,135 @@
+.grid {
+    display: grid;
+  grid-template-columns: minmax(200px, 500px) 1fr 1fr;
+  grid-gap: 1rem;
+  }
+  .box {
+    background-color: brown;
+    width: 300px;
+    height: 200px;
+    border: 2px solid white;
+  }
+
+  /* A Simple Grid
+Let’s suppose that we want to create a 3-columns grid. We will do the following: */
+
+.grid {
+    display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr);
+  grid-gap: 1rem;
+}
+
+/* Note that we can use the repeat() function to avoid repeating the minmax() three times. */
+
+.grid {
+    display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  grid-gap: 1rem;
+}
+
+/* How to fix the horizontal scrollbar? Well, we need to let the browser know that the number of columns should reduce if the viewport width isn’t enough.
+
+In flexbox, we do that by adding flex-wrap: wrap to the flexbox parent. */
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+/*flex with wrap */
+.grid {
+    display: flex;
+}
+/*flex without wrap */
+
+
+/* Grid with auto-fit/fill */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Grid without auto-fit/fill */
+.grid {
+    display: grid;
+    grid-template-columns:repeat(3, minmax(200px, 1fr))
+}
+
+/* Using Auto-Fit Or Auto-Fill Keywords
+To avoid tweaking the issues mentioned above, we can get the benefit of the auto-fit or auto-fill keywords. The difference between auto-fit and auto-fill is tricky.
+
+In short, auto-fit will expand the grid items to fill the available space. While auto-fill won’t expand the items. Instead, auto-fill will keep the available space reserved without altering the grid items width. */
+
+/* Using Auto-Fill Keywords */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-Fill, minmax(200px, 1fr));
+}
+
+/* Using Auto-Fit keyword */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Now that I explained how minmax() works, let’s explore some examples and use-cases.
+
+Use Cases And Examples
+Cards Grid */
+
+.grid {
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1rem;
+}
+
+/* When I started learning CSS grid, reading the value of grid-template-columns in this use-case was scary. It’s important to pay attention to viewports below 250px, as there will be a horizontal scrollbar. */
+
+/* To solve this, we have two solutions. The first one is using CSS media queries. The idea is to set the grid-template-columns to 1fr, and when the viewport width is big enough, we will apply the minmax(). */
+
+.grid {
+    display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+}
+
+@media (min-width: 300px) {
+    .grid { 
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+
+/* The second solution is to use CSS comparison functions. This solution is modern, and you need to check for browser support before using it. */
+
+.grid {
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  grid-gap: 1rem;
+}
+
+/* I used the min() comparison function as the first value for minmax(). Here is what’s happening:
+
+If the viewport width is less than 250px, then the first value of the minmax() function will be 100% of the parent width.
+If the viewport is larger than 250px, then the first value of the minmax() will be 250px. */
+
+/* Usage Of ch Unit For A Content Wrapper
+An interesting use case for minmax() is using it to create an article layout. For this example, the content is horizontally centered. */
+
+
+.grid {
+    display: grid;
+  grid-template-columns: minmax(1rem, 1fr) minmax(auto, 70ch) minmax(1rem, 1fr);
+  grid-gap: 1rem;
+}
+
+/* The first and last columns act as a gutter. The middle one is our focus. Notice that it has minmax(auto, 70ch). That means, the maximum width for this column is 70 characters per line. This is an ideal character length for better readability. */
+/* 
+The Downside Of Using Auto-Fit Irresponsibly
+It might be tempting to use auto-fit. The downside is that when the content is dynamic and you don’t have control, things might break. */
+
+.grid {
+    display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1rem;
+}
+
